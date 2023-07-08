@@ -1,23 +1,24 @@
 import React, { useState } from "react";
 import Searchbar from "./components/searchbar.js";
 import Searchdata from "./components/searchdata.js";
-import "./index.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+// import "./index.css";
+const queryClient = new QueryClient();
+
 function App() {
-  const [listdata, Setlistdata] = useState([]);
-  const handleData = (data) => {
-    Setlistdata(data.results);
-    // console.log(data);
+  const [searchval, setsearchval] = useState();
+
+  const handlesearchchange = (inputdata) => {
+    setsearchval(inputdata);
   };
 
   return (
-    <div className="container">
-      <div className="search">
-        <Searchbar retreivedData={handleData} />
+    <QueryClientProvider client={queryClient}>
+      <div className="container">
+        <Searchbar onSearchChange={handlesearchchange} />
+        {searchval && <Searchdata id={searchval} />}
       </div>
-      <div className="searchresults">
-        {listdata && <Searchdata result={listdata} />}
-      </div>
-    </div>
+    </QueryClientProvider>
   );
 }
 

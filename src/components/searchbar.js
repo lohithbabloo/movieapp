@@ -1,34 +1,39 @@
 import React, { useState } from "react";
+// import "../index.css";
 
-import { apikey, url } from "../api";
-
-import "../index.css";
-
-export const Searchbar = ({ retreivedData }) => {
-  const [searchval, Setsearchval] = useState("");
-  const search = (inputvalue) => {
-    const apiurl = url + `&query=${inputvalue}`;
-    fetch(apiurl, apikey)
+const Searchbar = ({ onSearchChange }) => {
+  const [searchval, setSearchval] = useState("");
+  const [results, setresults] = useState([]);
+  const handleChange = (inputval) => {
+    const apiurl = `https://api.themoviedb.org/3/search/movie?api_key=817692f6802bf176462fa945d617366a&query=${inputval}`;
+    fetch(apiurl)
       .then((response) => response.json())
       .then((data) => {
-        retreivedData(data);
+        setresults(data.results);
       });
+    setSearchval(inputval);
   };
-  const handlechange = (searchData) => {
-    Setsearchval(searchData);
-    search(searchData);
-  };
-
+  // const handleClick = (e) => {
+  //   onSearchChange(e.target.value);
+  // };
   return (
-    <div className="searchbar">
-      <input
-        type="text"
-        placeholder="Enter the movie name"
-        value={searchval}
-        onChange={(e) => handlechange(e.target.value)}
-      />
+    <div>
+      <form>
+        <input
+          type="text"
+          placeholder="Enter the movie name"
+          value={searchval}
+          onChange={(e) => handleChange(e.target.value)}
+        ></input>
+      </form>
+      {results.map((result) => {
+        return (
+          <button onClick={() => onSearchChange(result.id)}>
+            {result.title}
+          </button>
+        );
+      })}
     </div>
   );
 };
-
 export default Searchbar;

@@ -24,6 +24,7 @@ body{
 }
 ::placeholder{
     color: gray;
+    font-size: 14px;
 }
 .searchresults{
     margin-top: 10px;
