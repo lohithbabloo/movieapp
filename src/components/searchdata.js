@@ -1,16 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
-// import "../index.css";
-
+import { React, useState } from "react";
+import "../index.css";
+const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 const Searchdata = ({ id }) => {
-  // const movies = fetch(
-  //   `https://api.themoviedb.org/3/search/movie?api_key=817692f6802bf176462fa945d617366a&query=${result}`
-  // )
-  //   .then((response) => response.json())
-  //   .then((data) => {
-  //     console.log(data);
-  //     setvalue(data.results);
-  //   });
   const { data, isLoading } = useQuery({
     queryKey: ["movie", id],
     queryFn: () =>
@@ -29,8 +21,9 @@ const Searchdata = ({ id }) => {
     return null;
   }
   return (
-    <div>
+    <div className="bg-white">
       <p>{data.title}</p>
+      <img src={`${IMAGE_URL}${data.poster_path}`} alt={data.title} />
     </div>
   );
 };
