@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../index.css";
-// import "D:/Projects/movieapp/tailwind.config.js";
+import { Link } from "react-router-dom";
 const Searchbar = ({ onSearchChange }) => {
   const [searchval, setSearchval] = useState("");
   const [results, setresults] = useState([]);
@@ -15,18 +15,22 @@ const Searchbar = ({ onSearchChange }) => {
     setSearchval(inputval);
   };
 
-  const handleButtonClick = (id, title) => {
-    setSearchval(title);
+  const handleButtonClick = (id) => {
     setresults([]);
     onSearchChange(id);
   };
 
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between mb-10">
       <div className="text-xl font-medium">
-        <a className="text-white" href="#">
+        <button
+          onClick={() => {
+            window.location.reload();
+          }}
+          className="text-white"
+        >
           Movie<span className="text-yellow-500">Corner</span>
-        </a>
+        </button>
       </div>
       <div className="relative">
         <input
@@ -36,12 +40,12 @@ const Searchbar = ({ onSearchChange }) => {
           value={searchval}
           onChange={(e) => handleChange(e.target.value)}
         ></input>
-        <div className="bg-white flex flex-col absolute top-12 w-full rounded divide-y overflow-auto">
+        <div className="bg-white flex flex-col absolute top-12 w-full rounded divide-y overflow-auto max-h-[600px] ">
           {results.map((result) => {
             return (
               <button
                 onClick={() => handleButtonClick(result.id, result.title)}
-                className="text-left p-2"
+                className="text-left p-2 hover:bg-slate-100 "
               >
                 {result.title}
               </button>
