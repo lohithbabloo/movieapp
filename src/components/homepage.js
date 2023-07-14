@@ -1,5 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState, useEffect } from "react";
 
 const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
 const Homepage = ({ onitemselect }) => {
@@ -10,7 +9,6 @@ const Homepage = ({ onitemselect }) => {
         `https://api.themoviedb.org/3/movie/top_rated?api_key=817692f6802bf176462fa945d617366a`
       );
       const data = await res.json();
-      console.log(data);
       return data;
     },
   });
@@ -18,11 +16,11 @@ const Homepage = ({ onitemselect }) => {
     onitemselect(id);
   };
   return (
-    <div className="grid grid-cols-2 gap-y-5 md:grid-cols-4">
+    <div className="grid grid-cols-2 gap-y-5 gap-x-5 md:grid-cols-4 md:gap-y-5">
       {isLoading ? (
         <p>Loading....</p>
       ) : (
-        data.results.map((movie, id) => {
+        data.results.map((movie) => {
           return (
             <div className="">
               <button
@@ -30,7 +28,11 @@ const Homepage = ({ onitemselect }) => {
                   getId(movie.id);
                 }}
               >
-                <img src={`${IMAGE_URL}${movie.poster_path}`} width={280}></img>
+                <img
+                  src={`${IMAGE_URL}${movie.poster_path}`}
+                  width={280}
+                  alt={`${movie.title}`}
+                ></img>
                 <p className="text-white text-left">{movie.title}</p>
               </button>
             </div>

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "../index.css";
-import { Link } from "react-router-dom";
 const Searchbar = ({ onSearchChange }) => {
   const [searchval, setSearchval] = useState("");
   const [results, setresults] = useState([]);
@@ -9,7 +8,6 @@ const Searchbar = ({ onSearchChange }) => {
     fetch(apiurl)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.results);
         setresults(data.results);
       });
     setSearchval(inputval);
@@ -21,8 +19,8 @@ const Searchbar = ({ onSearchChange }) => {
   };
 
   return (
-    <div className="flex justify-between mb-10">
-      <div className="text-xl font-medium">
+    <div className="flex justify-between mb-10 flex-col text-center md:flex-row ">
+      <div className="text-xl font-medium mb-5">
         <button
           onClick={() => {
             window.location.reload();
@@ -34,7 +32,7 @@ const Searchbar = ({ onSearchChange }) => {
       </div>
       <div className="relative">
         <input
-          className="px-4 py-2 bg-opacity-30 focus:outline-none w-[500px] rounded bg-gray-700 relative text-white"
+          className="px-4 py-2 bg-opacity-30 focus:outline-none w-[200px] md:w-[500px] rounded bg-gray-700 relative text-white"
           type="text"
           placeholder="Enter the movie name"
           value={searchval}
